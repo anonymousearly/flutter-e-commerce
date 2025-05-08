@@ -1,6 +1,6 @@
 import 'package:ecommerce_mobile/models/characters.dart';
-
-class Cart {
+import 'package:flutter/material.dart';
+class Cart extends ChangeNotifier {
 
   // list of characters available
   List<Character> characters = [

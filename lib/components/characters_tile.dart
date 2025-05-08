@@ -4,8 +4,8 @@ import '../models/characters.dart';
 
 class CharacterTile extends StatelessWidget {
   Character character;
-  CharacterTile({super.key, required this.character});
-
+  void Function()? onTap;
+  CharacterTile({super.key, required this.character, required this.onTap});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,15 +30,17 @@ class CharacterTile extends StatelessWidget {
 
           const SizedBox(height: 12),
           //character description
-          Text(
-            textAlign: TextAlign.center,
-            character.description,
-            style: TextStyle(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              character.description,
+              style: const TextStyle(
               fontSize: 12,
               color: Colors.black,
-              fontStyle: FontStyle.italic,
+                fontStyle: FontStyle.italic,
 
             ),
+          ),
           ),
 
           const SizedBox(height: 28),
@@ -66,9 +68,14 @@ class CharacterTile extends StatelessWidget {
           
 
           //plus button
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: const BoxDecoration(
+          GestureDetector(
+            onTap: onTap,
+              //add character to cart
+              
+            
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: const BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
@@ -76,6 +83,7 @@ class CharacterTile extends StatelessWidget {
               Icons.add,
               color: Colors.white,
               ),
+            ),
           ),
         ],
       ),

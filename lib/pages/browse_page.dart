@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../components/characters_tile.dart';
 import '../models/characters.dart';
+import '../models/cart.dart';
+import 'package:provider/provider.dart';
 
 class BrowsePage extends StatefulWidget {
   const BrowsePage({super.key});
@@ -10,9 +12,27 @@ class BrowsePage extends StatefulWidget {
 }
 
 class _BrowsePageState extends State<BrowsePage> {
+
+  //add character to cart
+  void addCharacterToCart(Character character) {
+    Provider.of<Cart>(context, listen: false).addCharacterToCart(character);
+
+    //alert the user, character added to cart
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Character Added to Cart'),
+        content: Text('${character.name} has been added to your cart.'),
+      ),
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Consumer<Cart>(
+      builder: (context, value, child) => Column(
       children: [
         Container(
           padding: EdgeInsets.all(12),
@@ -70,13 +90,13 @@ class _BrowsePageState extends State<BrowsePage> {
             itemCount: 4,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              Character character = Character(
-                name: 'Uzumaki Naruto',
-                description: 'Uzumaki Naruto is a character from the Naruto series.',
-                imagePath: 'lib/images/naruto.png',
-              );
+              //get character
+              Character character = value.getCharactersList()[index];
+
+              //return character tile
               return CharacterTile(
                 character: character,
+                onTap: () => addCharacterToCart(character),
               );
             },
           ),
@@ -91,6 +111,8 @@ class _BrowsePageState extends State<BrowsePage> {
         ),
         
       ],
+    
+      ),
     );
   }
 }

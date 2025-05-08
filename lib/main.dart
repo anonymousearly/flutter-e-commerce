@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/landing_page.dart';
+import 'package:provider/provider.dart';
+import 'package:ecommerce_mobile/models/cart.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -9,9 +11,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LandingPage(),
-      );
+    return ChangeNotifierProvider(
+      create: (context) => Cart(),
+      builder: (context, child) => const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: LandingPage(),
+      ),
+    );
   }
 }
